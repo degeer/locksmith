@@ -606,9 +606,13 @@ func applyScreensaver(imagePath string) error {
 		return fmt.Errorf("failed to create screensaver directory: %w", err)
 	}
 
+	// Re-applying an image that already lives in the Screensaver folder is a
+	// no-op, not a failure: copying a file onto itself makes cp exit non-zero.
 	destFile := filepath.Join(picturesDir, filepath.Base(abs))
-	if err := exec.Command("cp", abs, destFile).Run(); err != nil {
-		return fmt.Errorf("failed to copy image: %w", err)
+	if abs != destFile {
+		if err := exec.Command("cp", abs, destFile).Run(); err != nil {
+			return fmt.Errorf("failed to copy image: %w", err)
+		}
 	}
 
 	major, err := macOSMajorVersion()
