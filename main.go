@@ -769,8 +769,8 @@ func (m model) populateListCmd() tea.Cmd {
 
 func main() {
 	// Headless flags: when any is set, apply that surface non-interactively and
-	// exit (used by master-control's scripts/theme-apply). With no flags, the
-	// interactive TUI runs as before, with an optional start-directory argument.
+	// exit, for use from scripts. With no flags, the interactive TUI runs, with
+	// an optional start-directory argument.
 	loginImg := flag.String("login", "", "headless: set Lock Screen to image (sudo)")
 	desktopImg := flag.String("desktop", "", "headless: set desktop wallpaper to image")
 	saverImg := flag.String("screensaver", "", "headless: set screensaver to image")

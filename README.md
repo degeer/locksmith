@@ -1,11 +1,9 @@
-```
-▗▖ ▄▄▄   ▗▄▄▖█  ▄  ▗▄▄▖▄▄▄▄  ▄ ▗▄▄▄▖▐▌
-▐▌█   █ ▐▌   █▄▀  ▐▌   █ █ █ ▄   █  ▐▌
-▐▌▀▄▄▄▀ ▐▌   █ ▀▄  ▝▀▚▖█   █ █   █  ▐▛▀▚▖
-▐▙▄▄▖   ▝▚▄▄▖█  █ ▗▄▄▞▘      █   █  ▐▌ ▐▌
-```
-
-# Locksmith
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img alt="Locksmith" src="assets/logo-light.svg" width="400">
+  </picture>
+</h1>
 
 A terminal-based tool for setting custom macOS login screen, desktop background, screensaver, and user account images.
 
@@ -64,4 +62,16 @@ Download the latest binary from the [Releases](https://github.com/degeer/locksmi
 chmod +x locksmith-darwin-arm64 && mv locksmith-darwin-arm64 /usr/local/bin/locksmith
 ```
 
+Use `locksmith-darwin-amd64` on Intel Macs. The binaries are not signed, so
+macOS blocks a downloaded one on first run. Clear the quarantine flag to allow
+it:
+
+```bash
+xattr -d com.apple.quarantine /usr/local/bin/locksmith
+```
+
 To build from source instead (for development), see [INSTALLATION.md](INSTALLATION.md).
+
+## License
+
+[MIT](LICENSE)
