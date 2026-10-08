@@ -883,6 +883,16 @@ func sudoWithPassword(password string) sudoFunc {
 }
 
 func runHeadless(login, desktop, screensaver, icon string, display int) error {
+	// Screensaver must run before login/desktop: it rewrites WallpaperAgent's
+	// store from disk and restarts the agent. A desktop change made just before
+	// has not been persisted yet (writes lag a second or two), so the rewrite
+	// would save the old desktop entry and the restart would revert it.
+	if screensaver != "" {
+		fmt.Println("Setting screensaver…")
+		if err := headlessScreensaver(screensaver); err != nil {
+			return fmt.Errorf("screensaver: %w", err)
+		}
+	}
 	if login != "" {
 		fmt.Println("Setting Lock Screen…")
 		if err := headlessLogin(login); err != nil {
@@ -893,12 +903,6 @@ func runHeadless(login, desktop, screensaver, icon string, display int) error {
 		fmt.Println("Setting desktop wallpaper…")
 		if err := setDesktopWallpaper(desktop, display); err != nil {
 			return fmt.Errorf("desktop: %w", err)
-		}
-	}
-	if screensaver != "" {
-		fmt.Println("Setting screensaver…")
-		if err := headlessScreensaver(screensaver); err != nil {
-			return fmt.Errorf("screensaver: %w", err)
 		}
 	}
 	if icon != "" {
